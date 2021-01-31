@@ -12,7 +12,20 @@ provider:
   stage: ${opt:stage, 'dev'}
   iamRoleStatements:
     - ${file(iam/SendMailIAM.yml):SendMailIAM}
-  
+
+resources:
+  Resources:
+    MailQueue: ${file(resources/MailQueue.yml):MailQueue}
+
 functions:
   sendMail:
     handler: src/handlers/sendMail.handler
+    events:
+      - sqs:
+          arn: ${self:custom.mailQueue.arn}
+          batchSize: 1 # process 1 email at a time from SQS message que
+
+custom:
+  mailQueue:
+    name: MailQueue-${self:provider.stage} # eq to "MailQueue-dev"
+    arn: !GetAtt MailQueue.Arn # arn is provided by !GetAtt intrinsic function, MailQueue is logic name
