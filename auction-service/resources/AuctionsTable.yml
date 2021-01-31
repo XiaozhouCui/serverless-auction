@@ -1,0 +1,24 @@
+AuctionsTable:
+  Type: AWS::DynamoDB::Table
+  Properties:
+    TableName: AuctionsTable-${self:provider.stage} # eq to "AuctionsTable-dev"
+    BillingMode: PAY_PER_REQUEST
+    AttributeDefinitions:
+      - AttributeName: id
+        AttributeType: S # String
+      - AttributeName: status
+        AttributeType: S # String
+      - AttributeName: endingAt
+        AttributeType: S # String (ISO date string)
+    KeySchema: # primary key
+      - AttributeName: id # partition key
+        KeyType: HASH
+    GlobalSecondaryIndexes:
+      - IndexName: statusAndEndDate
+        KeySchema: 
+          - AttributeName: status
+            KeyType: HASH
+          - AttributeName: endingAt
+            KeyType: RANGE # allow sort and filter ending date
+        Projection:
+          ProjectionType: ALL

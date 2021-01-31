@@ -1,0 +1,14 @@
+AuctionsTableIAM:
+  Effect: Allow
+  Action:
+    - dynamodb:PutItem
+    - dynamodb:Scan
+    - dynamodb:GetItem
+    - dynamodb:UpdateItem
+    - dynamodb:Query
+  Resource:
+    # copy the "arn" from AWS DynamoDB console
+    # grab the arn from custom variable in serverless.yml
+    - ${self:custom.AuctionsTable.arn}
+    - !Join ['/', ['${self:custom.AuctionsTable.arn}', 'index', 'statusAndEndDate']]
+    # - ${self:custom.AuctionsTable.arn}/index/statusAndEndDate
