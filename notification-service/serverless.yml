@@ -20,7 +20,7 @@ resources:
 functions:
   sendMail:
     handler: src/handlers/sendMail.handler
-    events:
+    events: # SQS to trigger the lambda function
       - sqs:
           arn: ${self:custom.mailQueue.arn}
           batchSize: 1 # process 1 email at a time from SQS message que
