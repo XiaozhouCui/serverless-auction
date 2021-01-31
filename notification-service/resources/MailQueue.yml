@@ -1,4 +1,17 @@
 MailQueue:
   Type: AWS::SQS::Queue
   Properties:
-    QueueName: ${self:custom.mailQueue.name} # custom variable for SQS ("MailQueue-dev")
+    QueueName: ${self:custom.mailQueue.name} # custom variable for SQS queue name ("MailQueue-dev")
+
+# The outputs to be added to CloudFormation Outputs tab
+Outputs:
+  # SQS queue arn number
+  MailQueueArn:
+    Value: ${self:custom.mailQueue.arn}
+    Export:
+      Name: ${self:custom.mailQueue.name}-Arn
+  # SQS url for sending emails
+  MailQueueUrl:
+    Value: ${self:custom.mailQueue.url}
+    Export:
+      Name: ${self:custom.mailQueue.name}-Url

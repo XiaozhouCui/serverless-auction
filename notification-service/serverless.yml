@@ -16,6 +16,9 @@ provider:
 resources:
   Resources:
     MailQueue: ${file(resources/MailQueue.yml):MailQueue}
+  Outputs: # Add the outputs to AWS CloudFormation Outputs tab
+    MailQueueArn: ${file(resources/MailQueue.yml):Outputs.MailQueueArn}
+    MailQueueUrl: ${file(resources/MailQueue.yml):Outputs.MailQueueUrl}
 
 functions:
   sendMail:
@@ -29,3 +32,4 @@ custom:
   mailQueue:
     name: MailQueue-${self:provider.stage} # eq to "MailQueue-dev"
     arn: !GetAtt MailQueue.Arn # arn is provided by !GetAtt intrinsic function, MailQueue is logic name
+    url: !Ref MailQueue # Ref returns the queue URL

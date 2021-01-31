@@ -8,7 +8,9 @@ async function sendMail(event, context) {
   const record = event.Records[0]; // the 1 message being processed at a time (batchSize: 1)
   console.log("record processing", record);
 
+  // event.Records[0].body is a JSON string
   const email = JSON.parse(record.body);
+  // { "subject": "Test Mail using AWS SQS", "body": "Test Body", "recipient": "john@example.com" }
   const { subject, body, recipient } = email;
 
   // Prepare parameters
