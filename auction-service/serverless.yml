@@ -11,9 +11,12 @@ provider:
   stage: ${opt:stage, 'dev'} # 'dev' is the default value for stage if undefined
   region: ap-southeast-2
   environment:
-    AUCTIONS_TABLE_NAME: ${self:custom.AuctionsTable.name} # env variable to be used in javascript
+    # env variable to be used in javascript
+    AUCTIONS_TABLE_NAME: ${self:custom.AuctionsTable.name}
+    MAIL_QUEUE_URL: ${self:custom.MailQueue.url}
   iamRoleStatements:
     - ${file(iam/AuctionsTableIAM.yml):AuctionsTableIAM}
+    - ${file(iam/MailQueueIAM.yml):MailQueueIAM}
 
 resources:
   Resources:
@@ -66,5 +69,9 @@ custom:
     # "!Ref AuctionsTable" will be replaced by the DynamoDB table name
     name: !Ref AuctionsTable # AuctionsTable here is the logic ref name
     arn: !GetAtt AuctionsTable.Arn
+  MailQueue:
+    # get arn and url from CloudFormation (cf)
+    arn: ${cf:notification-service-${self:provider.stage}.MailQueueArn}
+    url: ${cf:notification-service-${self:provider.stage}.MailQueueUrl}
   bundle:
     linting: false #disable linting for development only
