@@ -56,10 +56,10 @@ functions:
           path: /auction/{id}/bid
           authorizer: ${self:custom.authorizer}
 
-  processAuctions: # close auction after 1 hour
+  processAuctions: # find ended auctions and close them
     handler: src/handlers/processAuctions.handler
     # events:
-    #   - schedule: rate(1 minute) # run this lambda every 5 minutes
+    #   - schedule: rate(30 minutes) # run this lambda every 30 minutes
 
 # custom variables
 custom:
