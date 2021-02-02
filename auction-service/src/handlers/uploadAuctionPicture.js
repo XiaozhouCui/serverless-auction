@@ -1,9 +1,11 @@
 import middy from "@middy/core";
 import httpErrorHandler from "@middy/http-error-handler";
+import validator from "@middy/validator";
 import createError from "http-errors";
 import { getAuctionById } from "./getAuction";
 import { uploadPictureToS3 } from "../lib/uploadPictureToS3";
 import { setAuctionPictureUrl } from "../lib/setAuctionPictureUrl";
+import uploadAuctionPictureSchema from "../lib/schemas/uploadAuctionPictureSchema";
 
 export async function uploadAuctionPicture(event) {
   // get auction id
@@ -13,8 +15,8 @@ export async function uploadAuctionPicture(event) {
 
   // validation: only seller can upload picture
   const { email } = event.requestContext.authorizer; // current user's email
-  if(auction.seller !== email) {
-    throw new createError.Forbidden(`You are not the seller of this auction`)
+  if (auction.seller !== email) {
+    throw new createError.Forbidden(`You are not the seller of this auction`);
   }
 
   // handle picture file
@@ -39,4 +41,6 @@ export async function uploadAuctionPicture(event) {
   };
 }
 
-export const handler = middy(uploadAuctionPicture).use(httpErrorHandler());
+export const handler = middy(uploadAuctionPicture)
+  .use(httpErrorHandler())
+  .use(validator({ inputSchema: uploadAuctionPictureSchema }));
