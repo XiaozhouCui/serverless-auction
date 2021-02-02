@@ -14,9 +14,9 @@ async function createAuction(event, context) {
   // auth-service has stored user data from JWT into event.requestContext.authorizer
   const { email } = event.requestContext.authorizer;
   const now = new Date();
-  // set the auction to end after 2 hours
+  // set the auction to end after 1 hour
   const endDate = new Date();
-  endDate.setHours(now.getHours() + 2);
+  endDate.setHours(now.getHours() + 1);
 
   const auction = {
     id: uuid(),
