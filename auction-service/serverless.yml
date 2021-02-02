@@ -27,6 +27,7 @@ resources:
     AuctionsBucket: ${file(resources/AuctionsBucket.yml):AuctionsBucket}
     AuctionsBucketPolicy: ${file(resources/AuctionsBucket.yml):AuctionsBucketPolicy}
 
+# Lambda Functions
 functions:
   createAuction:
     handler: src/handlers/createAuction.handler

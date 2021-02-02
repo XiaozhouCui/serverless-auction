@@ -10,6 +10,13 @@ export async function uploadAuctionPicture(event) {
   const { id } = event.pathParameters;
   // get auction object
   const auction = await getAuctionById(id);
+
+  // validation: only seller can upload picture
+  const { email } = event.requestContext.authorizer; // current user's email
+  if(auction.seller !== email) {
+    throw new createError.Forbidden(`You are not the seller of this auction`)
+  }
+
   // handle picture file
   const base64 = event.body.replace(/^data:image\/\w+;base64,/, "");
   const buffer = Buffer.from(base64, "base64");

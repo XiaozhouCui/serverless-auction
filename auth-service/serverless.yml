@@ -23,7 +23,7 @@ functions:
           path: public
           method: POST
           cors: true
-  privateEndpoint:
+  privateEndpoint: # used to test auth service
     handler: src/handlers/private.handler
     events:
       - http:
@@ -34,7 +34,7 @@ functions:
 
 resources:
   Resources:
-    # This response is needed for custom authorizer failures cors support ¯\_(ツ)_/¯
+    # This response is needed for custom authorizer failures cors support
     GatewayResponse:
       Type: 'AWS::ApiGateway::GatewayResponse'
       Properties:
