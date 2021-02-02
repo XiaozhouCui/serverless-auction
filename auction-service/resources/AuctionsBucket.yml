@@ -6,7 +6,7 @@ AuctionsBucket:
       Rules:
         - Id: ExpirePictures # random ID name
           Status: Enabled
-          ExpirationInDays: 1 # auto delete picture after 1 day
+          ExpirationInDays: 3 # auto delete picture after 3 days
 
 # Add PublicRead policy for S3
 AuctionsBucketPolicy:
