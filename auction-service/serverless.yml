@@ -36,6 +36,7 @@ functions:
           method: POST
           path: /auction
           # protect api with auth-service lambda (refer to custom varialbe "authorizer")
+          cors: true
           authorizer: ${self:custom.authorizer}
 
   getAuctions:
@@ -44,6 +45,7 @@ functions:
       - http:
           method: GET
           path: /auctions
+          cors: true
           authorizer: ${self:custom.authorizer}
 
   getAuction: # get auction by id
@@ -52,6 +54,7 @@ functions:
       - http:
           method: GET
           path: /auction/{id}
+          cors: true
           authorizer: ${self:custom.authorizer}
 
   placeBid: # bid is a property in auction
@@ -60,6 +63,7 @@ functions:
       - http:
           method: PATCH
           path: /auction/{id}/bid
+          cors: true
           authorizer: ${self:custom.authorizer}
 
   uploadAuctionPicture:
@@ -68,12 +72,13 @@ functions:
       - http:
           method: PATCH
           path: /auction/{id}/picture
+          cors: true
           authorizer: ${self:custom.authorizer}
 
   processAuctions: # find ended auctions and close them
     handler: src/handlers/processAuctions.handler
-    # events: # if not scheduled, then need to manually invoke the lambda
-    #   - schedule: rate(30 minutes) # run this lambda every 30 minutes
+    events: # if not scheduled, then need to manually invoke the lambda
+      - schedule: rate(1 hour) # run this lambda every 1 hour
 
 # custom variables
 custom:
