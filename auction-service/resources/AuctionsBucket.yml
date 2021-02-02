@@ -2,6 +2,11 @@ AuctionsBucket:
   Type: AWS::S3::Bucket
   Properties:
     BucketName: ${self:custom.AuctionsBucket.name}
+    # LifecycleConfiguration: # auto remove pictures to lower cost
+    #   Rules:
+    #     - Id: ExpirePictures # random ID name
+    #       Status: Enabled
+    #       ExpirationInDays: 1 # auto delete picture after 1 day
 
 # Add PublicRead policy for S3
 AuctionsBucketPolicy:
