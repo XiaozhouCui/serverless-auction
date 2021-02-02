@@ -1,0 +1,18 @@
+AuctionsBucket:
+  Type: AWS::S3::Bucket
+  Properties:
+    BucketName: ${self:custom.AuctionsBucket.name}
+
+# Add PublicRead policy for S3
+AuctionsBucketPolicy:
+  Type: AWS::S3::BucketPolicy
+  Properties:
+    Bucket: !Ref AuctionsBucket # reference to logic name
+    PolicyDocument:
+      Statement:
+        - Sid: PublicRead
+          Effect: Allow
+          Principal: '*'
+          Action:
+            - s3:GetObject # get pictures
+          Resource: arn:aws:s3:::${self:custom.AuctionsBucket.name}/* # /* refer to any subfolder
