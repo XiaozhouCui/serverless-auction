@@ -15,5 +15,7 @@ export async function uploadPictureToS3(key, body) {
     })
     .promise();
 
-  return result;
+  // result.Location is the URL for the uploaded picture
+
+  return result.Location;
 }
