@@ -27,3 +27,7 @@ This auction app is a collection of API endpoints built with Serverless framewor
 ## Frontend UI
 
 [https://nifty-mclean-1342b9.netlify.app](https://nifty-mclean-1342b9.netlify.app)
+
+## Decommissioning
+
+Operational retirement steps and helper scripts are documented in [docs/decommission.md](docs/decommission.md).
